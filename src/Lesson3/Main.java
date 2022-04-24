@@ -1,89 +1,66 @@
 package Lesson3;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class Main {
+public class Main<T> {
+
+    public static <T> T[] change(T[] arr, int a, int b) {
+        T var;
+        var = arr[a];
+        arr[a] = arr[b];
+        arr[b] = var;
+        return arr;
+    }
+
+    public static <T> ArrayList<T> toArrayList(T[] arr) {
+        ArrayList<T> arrL = new ArrayList();
+        for (int i = 0; i < arr.length; i++) {
+            arrL.add(arr[i]);
+        }
+        return arrL;
+    }
+
+    public static <T> void arrPrint(T[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println(arr[i]);
+        }
+    }
+
 
     public static void main(String[] args) {
 
         //Задание 1
-
         System.out.println("Задание 1");
-
-        String[] array1 = {"Кот", "Собака", "Лошадь", "Человек"};
+        String[] arr = {"Кот", "Собака", "Лошадь", "Человек"};
         System.out.println("Изначальное содержание массива:");
-        System.out.println(Arrays.toString(array1));
-    ReplaceArrayElements(array1, 2, 3);
+        arrPrint(arr);
         System.out.println("Результат перестановки:");
-        System.out.println(Arrays.toString(array1));
-        System.out.println("");
-
+        change(arr, 2, 3);
+        arrPrint(arr);
 
         //Задание 2
-
         System.out.println("Задание 2");
 
-       Box box1 = new Box();
-       box1.add(new Apple());
-        box1.add(new Apple());
-        box1.add(new Apple());
-
-        System.out.println("Вес коробки 1: " + box1.getWeight());
-
-        Box box2 = new Box();
-        box2.add(new Orange());
-        box2.add(new Orange());
-        box2.add(new Orange());
-       System.out.println("Вес коробки 2: " + box2.getWeight());
-
-        System.out.println("Сравнение веса коробок:");
-        System.out.println("Вес коробок " + (box1.compare(box2) ? "одинаковый" : "разный") + ".");
-
-        System.out.println("В коробке 1 хранятся " + box1.getFruit().get(0).getClass().getSimpleName());
-
-        Box box3 = new Box();
-        box3.add(new Apple());
-        box3.add(new Apple());
-        box3.add(new Apple());
-        box3.add(new Apple());
-        box3.add(new Apple());
-
-        System.out.println("Вес коробки 3: " + box3.getWeight());
-        System.out.println("В коробке 3 хранятся " + box3.getFruit().get(0).getClass().getSimpleName());
-
-        box1.shiftSingleItem(box3);
-
-        System.out.println("Вес коробки 3: " + box3.getWeight());
-        System.out.println("Вес коробки 1: " + box1.getWeight());
-
-        try {
-            box2.shiftSingleItem(box3);
-        } catch (BoxException e) {
-            System.out.println(e);
+        Box<Apple> appleBox = new Box<>();
+        for (int i = 0; i < 6; i++) {
+            appleBox.add(new Apple());
         }
-        System.out.println("Вес коробки 3: " + box3.getWeight());
-        System.out.println("Вес коробки 2: " + box2.getWeight());
+        System.out.println("Вес коробки с яблоками: " + appleBox.getWeight());
 
-        try {
-            box3.add(new Orange());
-            box3.add(new Orange());
-            box3.add(new Orange());
-        } catch (BoxException e) {
-            System.out.println(e);
-        }
-        System.out.println("Вес коробки 3: " + box3.getWeight());
+        Box<Apple> appleBox2 = new Box<>();
+        appleBox2.add(new Apple());
+        System.out.println("Вес второй коробки с яблоками: " + appleBox2.getWeight());
 
+        Box<Orange> orangeBox = new Box<>();
+        orangeBox.add(new Orange());
+        System.out.println("Вес коробки с апельсинами: " + orangeBox.getWeight());
+
+        System.out.println("Сравнение веса коробок с яблоками и апельсинами: " + orangeBox.compare(appleBox));
+
+        appleBox.union(appleBox2);
+        System.out.println("Общий вес второй коробки с яблоками после перекидывания фруктов: " + appleBox2.getWeight());
 
     }
-
-
-    public static <T> void ReplaceArrayElements(T[] modifiableArray, int elemNum1, int elemNum2) {
-        T backupElement = modifiableArray[elemNum1];
-        modifiableArray[elemNum1] = modifiableArray[elemNum2];
-        modifiableArray[elemNum2] = backupElement;
-    }
-
 
 
 }

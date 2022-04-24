@@ -1,9 +1,10 @@
 package Lesson3;
 
-public class Orange extends Fruit{
+public class Orange extends Fruit {
+    Float weight = 1.5f;
 
-    public Orange() {
-        super(1.5f);
+    @Override
+    public Float getWeight() {
+        return weight;
     }
-
 }
